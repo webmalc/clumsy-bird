@@ -66,9 +66,11 @@ game.GameOverScreen = me.ScreenObject.extend({
                 this._super(me.Renderable, 'init',
                     [0, 0, me.game.viewport.width/2, me.game.viewport.height/2]
                 );
-                this.font = new me.Font('gamefont', 40, 'black', 'left');
-                this.steps = 'Steps: ' + game.data.steps.toString();
-                this.topSteps= 'Higher Step: ' + me.save.topSteps.toString();
+                var playerName = localStorage.getItem('playerName');
+                var text = playerName == 'mom' ? 'Очки МАМЫ' : 'Очки АЛИСЫ';
+                this.font = new me.Font('gamefont', 30, 'black', 'left');
+                this.steps = text + ': ' + game.data.steps.toString();
+                this.topSteps= 'Макс: ' + me.save.topSteps.toString();
             },
 
             draw: function (renderer) {
@@ -76,21 +78,42 @@ game.GameOverScreen = me.ScreenObject.extend({
                 var topStepsText = this.font.measureText(renderer, this.topSteps);
                 var scoreText = this.font.measureText(renderer, this.score);
 
-                //steps
-                this.font.draw(
-                    renderer,
-                    this.steps,
-                    me.game.viewport.width/2 - stepsText.width/2 - 60,
-                    me.game.viewport.height/2
-                );
+                var won = false;
+                var playerName = localStorage.getItem('playerName');
+                if (game.data.steps >= 5) {
+                    won = true;
+                    this.font = new me.Font('gamefont', 15, 'black', 'left');
+                }
 
-                //top score
-                this.font.draw(
-                    renderer,
-                    this.topSteps,
-                    me.game.viewport.width/2 - stepsText.width/2 - 60,
-                    me.game.viewport.height/2 + 50
-                );
+                if (!won) {
+                    //steps
+                    this.font.draw(
+                        renderer,
+                        this.steps,
+                        me.game.viewport.width/2 - stepsText.width/2 - 30,
+                        me.game.viewport.height/2
+                    );
+
+                    //top score
+                    this.font.draw(
+                        renderer,
+                        this.topSteps,
+                        me.game.viewport.width/2 - stepsText.width/2 - 30,
+                        me.game.viewport.height/2 + 50
+                    );
+                } else {
+                    if (playerName == 'alice') {
+                        var text = 'Победа!!!\n\nТвой подарок лежит на балконе\n\nна первой полке.\n\nC 8 марта!'
+                    } else {
+                        var text = 'Победа!!!\n\nТвой подарок лежит на шкафу\n\nв коридоре.\n\nC 8 марта!'
+                    }
+                    this.font.draw(
+                        renderer,
+                        text,
+                        me.game.viewport.width/2 - stepsText.width/2 - 120,
+                        me.game.viewport.height/2
+                    );
+                }
             }
         }));
         me.game.world.addChild(this.dialog, 12);

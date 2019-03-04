@@ -8,16 +8,21 @@ game.TitleScreen = me.ScreenObject.extend({
     },
 
     onResetEvent: function() {
+        localStorage.setItem('playerName', null);
         me.audio.stop("theme");
         game.data.newHiScore = false;
 
         me.game.world.addChild(new BackgroundLayer('bg', 1));
-        me.input.bindKey(me.input.KEY.ENTER, "enter", true);
-        me.input.bindKey(me.input.KEY.SPACE, "enter", true);
-        me.input.bindPointer(me.input.pointer.LEFT, me.input.KEY.ENTER);
+        me.input.bindKey(me.input.KEY.NUM1, "alice", true);
+        me.input.bindKey(me.input.KEY.NUM2, "mom", true);
+        me.input.bindKey(me.input.KEY.A, "alice", true);
+        me.input.bindKey(me.input.KEY.M, "mom", true);
+        // me.input.bindKey(me.input.KEY.SPACE, "enter", true);
+        // me.input.bindPointer(me.input.pointer.LEFT, me.input.KEY.ENTER);
 
         this.handler = me.event.subscribe(me.event.KEYDOWN, function (action, keyCode, edge) {
-            if (action === "enter") {
+            if (action === "alice" || action === "mom") {
+                localStorage.setItem('playerName', action);
                 me.state.change(me.state.PLAY);
             }
         });
@@ -47,14 +52,17 @@ game.TitleScreen = me.ScreenObject.extend({
                 // size does not matter, it's just to avoid having a zero size
                 // renderable
                 this._super(me.Renderable, 'init', [0, 0, 100, 100]);
-                this.text = me.device.touch ? 'Tap to start' : 'PRESS SPACE OR CLICK LEFT MOUSE BUTTON TO START \n\t\t\t\t\t\t\t\t\t\t\tPRESS "M" TO MUTE SOUND';
-                this.font = new me.Font('gamefont', 20, '#000');
+                this.text = 'ВЫБИРИТЕ ИГРОКА ДЛЯ НАЧАЛА ИГРЫ. НАЖМИ\n\n\t\t\t\t\t\t\t\t\t\t\t\t1 - АЛИСА\n\n\t\t\t\t\t\t\t\t\t\t\t\t2 - МАМА';
+                this.text2 = '\t\tНАБЕРИ 5 БАЛЛОВ И ПОЛУЧИ ПОДАРОК НА 8 МАРТА';
+                this.font = new me.Font('gamefont', 16, '#000');
+                this.font2 = new me.Font('gamefont', 17, 'red');
             },
             draw: function (renderer) {
                 var measure = this.font.measureText(renderer, this.text);
                 var xpos = me.game.viewport.width/2 - measure.width/2;
                 var ypos = me.game.viewport.height/2 + 50;
                 this.font.draw(renderer, this.text, xpos, ypos);
+                this.font2.draw(renderer, this.text2, 20, ypos + 120);
             }
         })), 12);
     },
@@ -63,6 +71,7 @@ game.TitleScreen = me.ScreenObject.extend({
         // unregister the event
         me.event.unsubscribe(this.handler);
         me.input.unbindKey(me.input.KEY.ENTER);
+
         me.input.unbindKey(me.input.KEY.SPACE);
         me.input.unbindPointer(me.input.pointer.LEFT);
         this.ground1 = null;
