@@ -80,7 +80,7 @@ game.GameOverScreen = me.ScreenObject.extend({
 
                 var won = false;
                 var playerName = localStorage.getItem('playerName');
-                if (game.data.steps >= 5) {
+                if (game.data.steps >= 6) {
                     won = true;
                     this.font = new me.Font('gamefont', 15, 'black', 'left');
                 }

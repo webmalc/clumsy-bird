@@ -53,7 +53,7 @@ game.TitleScreen = me.ScreenObject.extend({
                 // renderable
                 this._super(me.Renderable, 'init', [0, 0, 100, 100]);
                 this.text = 'ВЫБИРИТЕ ИГРОКА ДЛЯ НАЧАЛА ИГРЫ. НАЖМИ\n\n\t\t\t\t\t\t\t\t\t\t\t\t1 - АЛИСА\n\n\t\t\t\t\t\t\t\t\t\t\t\t2 - МАМА';
-                this.text2 = '\t\tНАБЕРИ 5 БАЛЛОВ И ПОЛУЧИ ПОДАРОК НА 8 МАРТА';
+                this.text2 = '\t\tНАБЕРИ 6 БАЛЛОВ И ПОЛУЧИ ПОДАРОК НА 8 МАРТА';
                 this.font = new me.Font('gamefont', 16, '#000');
                 this.font2 = new me.Font('gamefont', 17, 'red');
             },

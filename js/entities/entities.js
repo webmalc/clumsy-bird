@@ -1,7 +1,7 @@
 game.BirdEntity = me.Entity.extend({
     init: function(x, y) {
         var settings = {};
-        settings.image = 'clumsy';
+        settings.image = localStorage.getItem('playerName');
         settings.width = 85;
         settings.height = 60;
 

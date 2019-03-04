@@ -10,7 +10,8 @@ var game = {
     resources: [
             // images
         {name: "bg", type:"image", src: "data/img/bg.png"},
-        {name: "clumsy", type:"image", src: "data/img/clumsy.png"},
+        {name: "alice", type:"image", src: "data/img/alice.png"},
+        {name: "mom", type:"image", src: "data/img/mom.png"},
         {name: "pipe", type:"image", src: "data/img/pipe.png"},
         {name: "logo", type:"image", src: "data/img/logo.png"},
         {name: "ground", type:"image", src: "data/img/ground.png"},
